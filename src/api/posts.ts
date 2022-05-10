@@ -1,16 +1,17 @@
 import axios from 'axios';
+import { GetPostsData, GetPostsResponseSchema } from './types';
 
 const API_URL = 'http://localhost:8080';
 
 const POSTS_PER_PAGE = 5;
 
 // Gets the posts on the given page
-const getPosts = async (page: number) => {
+const getPosts = async (page: number): Promise<GetPostsData> => {
   console.log('post');
   const start = (page - 1) * POSTS_PER_PAGE;
   const limit = POSTS_PER_PAGE;
 
-  const posts = await axios({
+  return axios({
     method: 'get',
     url: `${API_URL}/posts`,
     params: {
@@ -18,15 +19,15 @@ const getPosts = async (page: number) => {
       limit,
     },
   }).then((res) => {
-    if (res.data.status !== 'success') {
-      throw Error(res.data.data);
+    console.log(res.data);
+    // Check whether the call succeeded or not.
+    const postsResponse = GetPostsResponseSchema.parse(res.data);
+    if (postsResponse.status !== 'success') {
+      throw Error(postsResponse.message);
     } else {
-      console.log(res.data.data);
-      return res.data.data;
+      return postsResponse.data;
     }
   });
-
-  return posts;
 };
 
 export { getPosts };
