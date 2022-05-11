@@ -13,16 +13,14 @@ type HomeProps = {
 const page = 1;
 
 const Home = (props: HomeProps) => {
-  const {
-    isLoading,
-    error,
-    data: getPostsData,
-  } = useQuery(['get-posts', page], () => getPosts(page));
+  const { data: getPostsData } = useQuery(['get-posts', page], () =>
+    getPosts(page)
+  );
 
   const renderPosts = (posts: Post[]) =>
-    posts.map((post: any) => (
-      <PostPreview key={post.id} title={post.title} body={post.body} />
-    ));
+    posts.map((post: any) => {
+      return <PostPreview key={post.id} post={post} />;
+    });
 
   const renderPageNav = (links: {
     previousPage?: string;
