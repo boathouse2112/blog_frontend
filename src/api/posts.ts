@@ -3,21 +3,12 @@ import { GetPostsData, GetPostsResponseSchema } from './types';
 
 const API_URL = 'http://localhost:8080';
 
-const POSTS_PER_PAGE = 5;
-
 // Gets the posts on the given page
 const getPosts = async (page: number): Promise<GetPostsData> => {
-  console.log('post');
-  const start = (page - 1) * POSTS_PER_PAGE;
-  const limit = POSTS_PER_PAGE;
-
+  console.log('page: ', page);
   return axios({
     method: 'get',
-    url: `${API_URL}/posts`,
-    params: {
-      start,
-      limit,
-    },
+    url: `${API_URL}/page/${page}`,
   }).then((res) => {
     console.log(res.data);
     // Check whether the call succeeded or not.

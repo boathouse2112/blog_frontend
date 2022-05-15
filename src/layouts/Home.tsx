@@ -1,18 +1,14 @@
 import { useQuery } from 'react-query';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { getPosts } from '../api/posts';
 import { Post } from '../api/types';
 import Header from '../components/Header';
 import PostPreview from '../components/PostPreview';
 
-type HomeProps = {
-  title?: string;
-  articles: { title: string; body: string }[];
-};
+const Home = () => {
+  const params = useParams();
+  const page = parseInt(params.page ?? '1', 10);
 
-const page = 1;
-
-const Home = (props: HomeProps) => {
   const { data: getPostsData } = useQuery(['get-posts', page], () =>
     getPosts(page)
   );
@@ -22,16 +18,22 @@ const Home = (props: HomeProps) => {
       return <PostPreview key={post.id} post={post} />;
     });
 
-  const renderPageNav = (links: {
-    previousPage?: string;
-    nextPage?: string;
-  }) => {
-    const { previousPage, nextPage } = links;
+  const renderPageNav = (numberOfPages: number) => {
+    const previousPageExists = page > 1;
+    const nextPageExists = page < numberOfPages;
 
     return (
       <nav>
-        {previousPage ? <Link to={previousPage}>Older</Link> : undefined}
-        {nextPage ? <Link to={nextPage}>Newer</Link> : undefined}
+        {previousPageExists ? (
+          <Link to={`/page/${page - 1}`}>Older</Link>
+        ) : undefined}
+
+        <Link to={'/page/1'}>Page 1</Link>
+        <Link to={`/page/${numberOfPages}`}>Page {numberOfPages}</Link>
+
+        {nextPageExists ? (
+          <Link to={`/page/${page + 1}`}>Newer</Link>
+        ) : undefined}
       </nav>
     );
   };
@@ -43,14 +45,12 @@ const Home = (props: HomeProps) => {
         {getPostsData ? (
           <>
             {renderPosts(getPostsData.posts)}
-            {renderPageNav(getPostsData._links)}
+            {renderPageNav(getPostsData.numberOfPages)}
           </>
         ) : undefined}
       </main>
     </>
   );
 };
-
-export type { HomeProps };
 
 export default Home;

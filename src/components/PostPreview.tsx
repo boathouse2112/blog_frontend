@@ -1,4 +1,6 @@
+import { Link } from 'react-router-dom';
 import { Post } from '../api/types';
+import { postURL } from '../util/url';
 
 /**
  * Preview of blog posts for the main page
@@ -13,12 +15,12 @@ const PostPreview = (props: { post: Post }) => {
         </h2>
         <div className="text-lg tracking-wide leading-relaxed">
           <p>{body}</p>
-          <a
-            href="/2022/05/06"
+          <Link
+            to={postURL(props.post)}
             className="underline underline-offset-2 decoration-1"
           >
             Read more
-          </a>
+          </Link>
         </div>
       </div>
     </>
