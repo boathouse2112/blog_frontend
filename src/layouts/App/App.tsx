@@ -15,11 +15,10 @@ function App() {
             <Route path="/page/" element={<Navigate replace to="/" />} />
             <Route path="/page/1" element={<Navigate replace to="/" />} />
             <Route path="/page/:page" element={<Home />} />
-            <Route path="/:year/" element={<Post />} />
+            <Route path="/:year/" element={<Home />} />
             <Route path="/:year/:month" element={<Post />} />
             <Route path="/:year/:month/:day" element={<Post />} />
             <Route path="/:year/:month/:day/:slug" element={<Post />} />
-            <Route path="*" element={<Post />} />
           </Routes>
         </div>
       </QueryClientProvider>
