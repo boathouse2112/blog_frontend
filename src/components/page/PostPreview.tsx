@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import { Post } from '../api/types';
-import { postURL } from '../util/url';
+import { Post } from '../../api/types';
+import { postURL } from '../../util/url';
 
 /**
  * Preview of blog posts for the main page

@@ -52,17 +52,17 @@ type PostData = z.infer<typeof PostDataSchema>;
  * Schema of the getPosts response data, including an array of Post,
  * and links to the previous and next page of posts, if they exist.
  */
-const GetPostsDataSchema = z.object({
+const PageDataSchema = z.object({
   numberOfPages: z.number(),
   posts: PostDataSchema.array(),
 });
-type GetPostsData = z.infer<typeof GetPostsDataSchema>;
+type PageData = z.infer<typeof PageDataSchema>;
 
 /**
  * Schema of a JSONResponse for getPosts
  */
-const GetPostsResponseSchema = createJSONResponseSchema(GetPostsDataSchema);
-type GetPostsResponse = z.infer<typeof GetPostsResponseSchema>;
+const PageResponseSchema = createJSONResponseSchema(PageDataSchema);
+type PageResponse = z.infer<typeof PageResponseSchema>;
 
-export type { Post, PostData, GetPostsData, GetPostsResponse };
-export { PostSchema, GetPostsDataSchema, GetPostsResponseSchema };
+export type { Post, PostData, PageData, PageResponse };
+export { PostSchema, PageDataSchema, PageResponseSchema };
