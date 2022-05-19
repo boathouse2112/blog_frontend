@@ -11,12 +11,12 @@ const PostPreview = (props: { post: Post }) => {
     <>
       <div className="my-12">
         <h2 className="mb-5 text-4xl font-light leading-snug underline underline-offset-4 decoration-1">
-          {title}
+          <Link to={'/' + postURL(props.post)}>{title}</Link>
         </h2>
         <div className="text-lg tracking-wide leading-relaxed">
           <p>{body}</p>
           <Link
-            to={postURL(props.post)}
+            to={'/' + postURL(props.post)}
             className="underline underline-offset-2 decoration-1"
           >
             Read more
